@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Paleta Oficial do Feed do Instagram @espacoconceicaoferraz (Branco Clínico + Degradê Metálico Petróleo-Ciano) */
+  --color-cream: #FFFFFF;
+  --color-nude: #F2F7F9;
+  --color-nude-deep: #E2EEF2;
+  --color-rosegold-light: #58B2CC;
+  --color-rosegold: #287086;
+  --color-rosegold-dark: #194A59;
+  --color-petrol: #0C1A20;
+  --color-petrol-deep: #071014;
+  --color-espresso: #0B161B;
+  --color-warmgray: #425861;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #FFFFFF;
+    color: #0B161B;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Assinatura Visual do Instagram @espacoconceicaoferraz: Degradê Metálico Petróleo-Ciano com brilho central */
+.bg-metallic-teal {
+  background: linear-gradient(
+    90deg,
+    #091418 0%,
+    #1D5466 32%,
+    #4CA4BE 50%,
+    #1D5466 68%,
+    #091418 100%
+  );
+}
+
+.bg-metallic-teal-Diagnal {
+  background: linear-gradient(
+    135deg,
+    #081216 0%,
+    #163E4C 35%,
+    #2E7C94 52%,
+    #133642 75%,
+    #081216 100%
+  );
+}
+
+.text-metallic-teal {
+  background: linear-gradient(
+    90deg,
+    #091418 0%,
+    #24687E 38%,
+    #4DA6C0 52%,
+    #215E72 68%,
+    #091418 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Shimmer highlight sweep on primary CTA buttons */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn-shimmer:hover::after {
+  left: 140%;
+}
+
+/* Infinite luxury marquee animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Slow rotating circular seal */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
+/* Gentle floating card animation */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-float-gentle {
+  animation: float-gentle 5.5s ease-in-out infinite;
+}
+
+/* Ambient glowing background pulse */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
+}

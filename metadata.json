@@ -1,0 +1,6 @@
+{
+  "name": "Espaço Conceição Ferraz — Clínica de Estética Avançada",
+  "description": "Protocolos estéticos faciais, corporais e pós-operatório personalizados no coração do Ipsep, Recife. Excelência, cuidado humanizado e resultados reais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
