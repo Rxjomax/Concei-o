@@ -1,7 +1,7 @@
 export type ProcedureCategory =
   | 'todos'
-  | 'planos-corporais'
   | 'facial'
+  | 'planos-corporais'
   | 'depilacao-cera'
   | 'pos-operatorio';
 
@@ -18,13 +18,12 @@ export interface ProcedureItem {
   highlights: string[];
   image: string;
   whatsappText: string;
-  sheermeUrl?: string;
+  instagramHighlight?: string;
   featured?: boolean;
 }
 
 export interface WaxingServiceItem {
   id: string;
-  sheermeId: string;
   name: string;
   duration: string;
   price: string;
@@ -64,7 +63,6 @@ export const DEFAULT_WHATSAPP_LINK =
   'https://wa.me/5581985350230?text=Ol%C3%A1%20vim%20pelo%20site%20e%20quero%20saber%20mais!';
 export const INSTAGRAM_URL = 'https://www.instagram.com/espacoconceicaoferraz/';
 export const INSTAGRAM_EMBED_URL = 'https://www.instagram.com/espacoconceicaoferraz/embed';
-export const SHEERME_BASE_URL = 'https://sheerme.com/h/espaco-conceicao-ferraz-58890';
 export const GOOGLE_MAPS_DIRECTIONS_URL =
   'https://www.google.com/maps/search/?api=1&query=R.+Landelino+C%C3%A2mara,+244+-+Ipsep,+Recife+-+PE,+51350-070';
 
@@ -72,7 +70,7 @@ export function buildWhatsAppLink(customMessage: string): string {
   return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(customMessage)}`;
 }
 
-// Fotos 100% REAIS da Clínica e da Especialista Conceição Ferraz (extraídas do acervo oficial da clínica)
+// Fotos 100% REAIS da Clínica e da Especialista Conceição Ferraz (extraídas do acervo oficial e Instagram)
 export const REAL_PHOTOS = {
   conceicaoPortraitStudio: '/images/real/clinic_1.jpg',
   clinicRoom1: '/images/real/clinic_2.jpg',
@@ -93,112 +91,181 @@ export const BODY_IMAGE = REAL_PHOTOS.conceicaoBodyEquipment;
 export const WELLNESS_IMAGE = REAL_PHOTOS.clinicRoom2;
 export const INTERIOR_IMAGE = REAL_PHOTOS.clinicRoom1;
 
-export const PROCEDURES: ProcedureItem[] = [
+// Os 3 Protocolos Mais Pedidos no Instagram @espacoconceicaoferraz
+export const INSTAGRAM_FEATURED_SERVICES: ProcedureItem[] = [
   {
-    id: 'plano-essencial-1x',
+    id: 'destaque-limpeza-pele',
     number: '01',
-    title: 'Plano Essencial | 1x na Semana (Drenagem ou Modeladora)',
-    category: 'planos-corporais',
-    categoryLabel: 'Tratamentos Corporais · Pacote Mensal',
+    title: 'Limpeza de Pele Profunda & Fototerapia LED',
+    category: 'facial',
+    categoryLabel: 'Destaque no Instagram · Estética Facial',
     duration: '60 min / sessão',
-    priceLabel: 'A partir de R$ 300 / mês',
-    sessionsSummary: 'Pacote com 4 sessões por mês',
+    priceLabel: 'Resultado na 1ª Sessão',
+    sessionsSummary: 'Extração cuidadosa + Máscara de LED',
     description:
-      'Pacote com 4 sessões mensais (1 vez por semana) podendo escolher entre drenagem linfática ou massagem modeladora, ideal para manutenção contínua e redução de retenção líquida.',
+      'Nosso protocolo facial queridinho no Instagram: remoção profunda de cravos e impurezas acumuladas sem agredir a pele, associada a máscara fototerápica de LED e ativos calmantes.',
     highlights: [
-      '4 sessões de 60 minutos por mês (1x por semana)',
-      'Escolha livre entre Drenagem Linfática ou Massagem Modeladora',
-      'Redução de inchaço, melhora da circulação e contorno corporal',
+      'Extração minuciosa e delicada logo na primeira sessão',
+      'Fototerapia LED para ação anti-inflamatória e regeneradora',
+      'Pele limpa, macia, uniforme e com viço imediato',
     ],
-    image: REAL_PHOTOS.clinicRoom2,
+    image: REAL_PHOTOS.beforeAfterSkinCleaning,
     whatsappText:
-      'Olá! Vim pelo site e quero agendar o Plano Essencial | 1x na semana (4 sessões/mês - R$ 300).',
-    sheermeUrl: 'https://sheerme.com/h/espaco-conceicao-ferraz-58890?services=185527',
+      'Olá, Conceição! Vi os resultados de Antes e Depois da Limpeza de Pele e quero agendar minha sessão!',
+    instagramHighlight: 'Ver Antes e Depois no @espacoconceicaoferraz',
     featured: true,
   },
   {
-    id: 'plano-bem-estar-2x',
+    id: 'destaque-corporal-personalizado',
     number: '02',
-    title: 'Plano Bem-Estar | 2x na Semana (Drenagem ou Modeladora)',
+    title: 'Drenagem Linfática & Massagem Modeladora',
     category: 'planos-corporais',
-    categoryLabel: 'Tratamentos Corporais · Pacote Mensal',
+    categoryLabel: 'Mais Procurado · Estética Corporal',
     duration: '60 min / sessão',
-    priceLabel: 'A partir de R$ 520 / mês',
-    sessionsSummary: 'Pacote com 8 sessões por mês',
+    priceLabel: 'Sessão avulsa ou Planos 1x, 2x e 3x/sem',
+    sessionsSummary: 'Redução de medidas, inchaço e celulite',
     description:
-      'Pacote com 8 sessões por mês (2 vezes na semana) podendo escolher entre drenagem linfática ou massagem modeladora para acelerar resultados no contorno corporal e bem-estar.',
+      'Protocolos corporais manuais e associados a equipamentos (endermoterapia) com mão leve que não deixa roxo, focados em desinchar, melhorar a circulação e remodelar o contorno corporal.',
     highlights: [
-      '8 sessões de 60 minutos por mês (2x por semana)',
-      'Alternância estratégica entre Drenagem Linfática e Modeladora',
-      'Excelente custo-benefício para tratamento de celulite e medidas',
+      'Planos mensais flexíveis (4, 8 ou 12 sessões) ou sessão individual',
+      'Combinação estratégica de Drenagem Linfática e Modeladora',
+      'Tratamento para retenção líquida, gordura localizada, celulite e flacidez',
     ],
     image: REAL_PHOTOS.conceicaoBodyEquipment,
     whatsappText:
-      'Olá! Vim pelo site e quero agendar o Plano Bem-Estar | 2x na semana (8 sessões/mês - R$ 520).',
-    sheermeUrl: 'https://sheerme.com/h/espaco-conceicao-ferraz-58890?services=185528',
+      'Olá, Conceição! Vim pelo site e quero saber mais sobre os protocolos e planos de Drenagem Linfática e Massagem Modeladora.',
+    instagramHighlight: 'Acompanhar rotina corporal no Instagram',
     featured: true,
   },
   {
-    id: 'plano-vip-3x',
+    id: 'destaque-rejuvenescimento-facial',
     number: '03',
-    title: 'Plano VIP | 3x na Semana com Protocolo Personalizado',
-    category: 'planos-corporais',
-    categoryLabel: 'Tratamentos Corporais · Pacote VIP',
-    duration: '60 min / sessão',
-    priceLabel: 'A partir de R$ 690 / mês',
-    sessionsSummary: 'Pacote com 12 sessões por mês',
+    title: 'Botox, Preenchimento Labial & Microagulhamento',
+    category: 'facial',
+    categoryLabel: 'Estética Facial Avançada',
+    duration: '45 a 60 min',
+    priceLabel: 'Avaliação Facial Individualizada',
+    sessionsSummary: 'Rejuvenescimento, colágeno e harmonia natural',
     description:
-      'Nosso plano mais completo: pacote com 12 sessões mensais (3 vezes na semana) combinando drenagem linfática e massagem modeladora com protocolo 100% personalizado para o seu objetivo.',
+      'Procedimentos faciais avançados para suavizar linhas de expressão, realçar o contorno e volume labial com naturalidade e estimular colágeno para textura firme e luminosa.',
     highlights: [
-      '12 sessões de 60 minutos por mês (3x por semana)',
-      'Protocolo personalizado para gordura localizada, celulite e flacidez',
-      'Acompanhamento intensivo com resultados visíveis mais rápidos',
+      'Aplicação precisa e mão leve, preservando sua expressão natural',
+      'Microagulhamento e peelings para manchas, poros e linhas finas',
+      'Acompanhamento completo antes e após cada procedimento',
     ],
-    image: REAL_PHOTOS.clinicRoom1,
+    image: REAL_PHOTOS.skinGlowResult,
     whatsappText:
-      'Olá! Vim pelo site e quero agendar o Plano VIP | 3x na semana (12 sessões/mês - R$ 690).',
-    sheermeUrl: 'https://sheerme.com/h/espaco-conceicao-ferraz-58890?services=185529',
+      'Olá, Conceição! Vim pelo site e quero agendar uma avaliação para Estética Facial Avançada (Botox / Preenchimento / Microagulhamento).',
+    instagramHighlight: 'Ver dicas de cuidados faciais no Instagram',
     featured: true,
   },
+];
+
+export const PROCEDURES: ProcedureItem[] = [
   {
-    id: 'limpeza-pele-microagulhamento',
-    number: '04',
-    title: 'Limpeza de Pele Profunda, Fototerapia LED & Microagulhamento',
+    id: 'limpeza-pele-led',
+    number: '01',
+    title: 'Limpeza de Pele Profunda & Fototerapia LED',
     category: 'facial',
     categoryLabel: 'Estética Facial',
     duration: '60 min',
-    priceLabel: 'Sob avaliação personalizada',
-    sessionsSummary: 'Renovação celular, controle de oleosidade e viço',
+    priceLabel: 'Resultado visível na 1ª sessão',
+    sessionsSummary: 'Extração profunda + LED + Hidratação calmante',
     description:
-      'Higienização clínica atraumática associada a máscara de LED fototerápica, peelings, hidratação profunda e microagulhamento para renovação da textura, clareamento e estímulo de colágeno.',
+      'Higienização clínica detalhada para remoção de cravos, miliuns e impurezas acumuladas, finalizada com máscara de LED fototerápica e ativos calmantes que devolvem o viço imediato.',
     highlights: [
-      'Extração delicada com máscara de LED e ativos calmantes',
-      'Indução de colágeno para poros dilatados e cicatrizes de acne',
-      'Viço e luminosidade imediatos visíveis já na 1ª sessão',
+      'Extração cuidadosa sem machucar ou marcar a pele',
+      'Controle da oleosidade e desobstrução profunda dos poros',
+      'Alta frequência e máscara de LED para cicatrização e brilho',
     ],
     image: REAL_PHOTOS.ledMaskFacial,
     whatsappText:
-      'Olá! Vim pelo site e gostaria de saber mais sobre Limpeza de Pele Profunda, Fototerapia LED e Microagulhamento.',
+      'Olá, Conceição! Vim pelo site e gostaria de agendar uma Limpeza de Pele Profunda com Fototerapia LED.',
+    instagramHighlight: 'Ver resultados no Instagram',
   },
   {
     id: 'botox-preenchimento-rejuvenescimento',
-    number: '05',
-    title: 'Toxina Botulínica (Botox), Preenchimento Labial & Rejuvenescimento',
+    number: '02',
+    title: 'Toxina Botulínica (Botox) & Preenchimento Labial',
     category: 'facial',
     categoryLabel: 'Estética Facial Avançada',
     duration: '45 a 60 min',
     priceLabel: 'Sob avaliação personalizada',
     sessionsSummary: 'Realce natural dos traços com mão leve e precisão',
     description:
-      'Procedimentos faciais avançados realizados com técnica apurada para suavizar linhas de expressão, realçar o volume labial com naturalidade e devolver o viço da pele.',
+      'Procedimentos injetáveis e de harmonização realizados com técnica apurada para prevenir e suavizar rugas dinâmicas, hidratar e dar volume delicado aos lábios.',
     highlights: [
-      'Aplicação precisa e delicada, minimizando desconfortos e marcas',
-      'Resultados elegantes que preservam a sua expressão natural',
-      'Avaliação facial detalhada e acompanhamento pós-procedimento',
+      'Aplicação precisa e delicada, minimizando desconfortos',
+      'Resultados elegantes que respeitam a anatomia do seu rosto',
+      'Avaliação facial detalhada e retorno de acompanhamento',
     ],
     image: REAL_PHOTOS.skinGlowResult,
     whatsappText:
-      'Olá! Vim pelo site e quero agendar uma avaliação para Botox, Preenchimento Labial ou Rejuvenescimento Facial.',
+      'Olá, Conceição! Vim pelo site e quero agendar uma avaliação para Botox ou Preenchimento Labial.',
+    instagramHighlight: 'Conhecer mais no Instagram',
+  },
+  {
+    id: 'peeling-microagulhamento-hidratacao',
+    number: '03',
+    title: 'Microagulhamento, Peeling & Hidratação Facial',
+    category: 'facial',
+    categoryLabel: 'Renovação & Colágeno',
+    duration: '60 min',
+    priceLabel: 'Protocolo personalizado',
+    sessionsSummary: 'Clareamento, textura uniforme e estímulo de colágeno',
+    description:
+      'Associação de microagulhamento com drug delivery de ativos, peelings renovadores e hidratação profunda para tratar manchas, melasma, cicatrizes de acne e linhas finas.',
+    highlights: [
+      'Indução de colágeno para poros dilatados e firmeza da pele',
+      'Peeling seguro e adaptado ao fototipo da sua pele',
+      'Nutrição celular intensa para peles desvitalizadas',
+    ],
+    image: REAL_PHOTOS.beforeAfterSkinCleaning,
+    whatsappText:
+      'Olá, Conceição! Vim pelo site e quero saber mais sobre Microagulhamento, Peeling e Hidratação Facial.',
+    instagramHighlight: 'Ver conteúdos no Instagram',
+  },
+  {
+    id: 'drenagem-modeladora-planos',
+    number: '04',
+    title: 'Drenagem Linfática & Massagem Modeladora (1x, 2x ou 3x/sem)',
+    category: 'planos-corporais',
+    categoryLabel: 'Estética Corporal · Planos Mensais',
+    duration: '60 min / sessão',
+    priceLabel: 'Planos de 4, 8 ou 12 sessões',
+    sessionsSummary: 'Redução de retenção líquida e remodelagem corporal',
+    description:
+      'Sessões avulsas ou pacotes mensais (Essencial 1x/sem, Bem-Estar 2x/sem ou VIP 3x/sem) combinando drenagem linfática e massagem modeladora manual com técnica que não deixa hematomas.',
+    highlights: [
+      'Alívio imediato de inchaço, pernas cansadas e retenção de líquidos',
+      'Melhora da circulação sanguínea, funcionamento intestinal e contorno',
+      'Opção de pacotes mensais com valores especiais pelo WhatsApp',
+    ],
+    image: REAL_PHOTOS.conceicaoBodyEquipment,
+    whatsappText:
+      'Olá, Conceição! Vim pelo site e quero conhecer os valores das sessões e planos mensais de Drenagem Linfática e Massagem Modeladora.',
+    instagramHighlight: 'Ver rotina no Instagram',
+  },
+  {
+    id: 'gordura-celulite-flacidez',
+    number: '05',
+    title: 'Tratamento para Gordura Localizada, Celulite & Flacidez',
+    category: 'planos-corporais',
+    categoryLabel: 'Estética Corporal Avançada',
+    duration: '60 min',
+    priceLabel: 'Protocolo sob avaliação',
+    sessionsSummary: 'Endermoterapia, ativos lipolíticos e firmeza',
+    description:
+      'Protocolos corporais direcionados para remodelar abdômen, flancos, culote e glúteos, unindo recursos tecnológicos, endermoterapia, termoterapia e dermocosméticos de alta performance.',
+    highlights: [
+      'Ação direta sobre nódulos de celulite e aspecto casca de laranja',
+      'Melhora da tonicidade da pele e fortalecimento do contorno corporal',
+      'Plano de tratamento desenhado após avaliação física individual',
+    ],
+    image: REAL_PHOTOS.clinicRoom2,
+    whatsappText:
+      'Olá, Conceição! Vim pelo site e quero agendar uma avaliação corporal para Gordura Localizada, Celulite e Flacidez.',
+    instagramHighlight: 'Ver protocolos no Instagram',
   },
   {
     id: 'depilacao-cera-completa',
@@ -208,18 +275,18 @@ export const PROCEDURES: ProcedureItem[] = [
     categoryLabel: 'Depilação a Cera',
     duration: '30 min',
     priceLabel: 'De R$ 30 a R$ 90',
-    sessionsSummary: 'Remoção delicada pela raiz com biossegurança total',
+    sessionsSummary: 'Remoção delicada pela raiz com 100% de biossegurança',
     description:
-      'Procedimento realizado com cera quente ou morna de alta qualidade aplicada na direção do crescimento dos pelos para remoção eficaz pela raiz, deixando a pele macia e cuidada.',
+      'Procedimento realizado com cera quente ou morna de alta qualidade e totalmente descartável, proporcionando pele lisinha, macia e livre da irritação da lâmina.',
     highlights: [
-      'Meia Perna (R$ 30) · Coxa (R$ 30) · Virilha (R$ 35)',
+      'Meia Perna (R$ 30) · Coxa (R$ 30) · Virilha Simples (R$ 35)',
       'Glúteo (R$ 50) · Virilha Completa (R$ 60) · Perna Inteira (R$ 60)',
       'Combo Especial: Perna + Virilha Completa por R$ 90',
     ],
     image: REAL_PHOTOS.conceicaoClinicalMask,
     whatsappText:
-      'Olá! Vim pelo site e gostaria de agendar um horário para Depilação a Cera.',
-    sheermeUrl: 'https://sheerme.com/h/espaco-conceicao-ferraz-58890?services=185520',
+      'Olá, Conceição! Vim pelo site e gostaria de agendar um horário para Depilação a Cera.',
+    instagramHighlight: 'Agendar pelo WhatsApp',
   },
   {
     id: 'pos-operatorio-massagem-relaxante',
@@ -228,10 +295,10 @@ export const PROCEDURES: ProcedureItem[] = [
     category: 'pos-operatorio',
     categoryLabel: 'Bem-estar & Pós-Operatório',
     duration: '60 min',
-    priceLabel: 'Protocolo individualizado',
+    priceLabel: 'Atendimento especializado',
     sessionsSummary: 'Recuperação cirúrgica segura e alívio de tensões',
     description:
-      'Cuidado técnico especializado para pós-operatório de cirurgias plásticas (prevenção de fibroses e edemas) e sessões de massagem relaxante para alívio de estresse e dores musculares.',
+      'Cuidado técnico especializado para pós-operatório de cirurgias plásticas (prevenção de fibroses, seromas e edemas) e sessões de massagem relaxante para alívio de estresse e dores musculares.',
     highlights: [
       'Manobras suaves e seguras para cada etapa da cicatrização',
       'Sala térrea 100% acessível para pacientes recém-operadas',
@@ -239,14 +306,14 @@ export const PROCEDURES: ProcedureItem[] = [
     ],
     image: REAL_PHOTOS.conceicaoPortraitStudio,
     whatsappText:
-      'Olá! Vim pelo site e gostaria de saber mais sobre Pós-Operatório e Massagem Relaxante.',
+      'Olá, Conceição! Vim pelo site e gostaria de saber mais sobre Pós-Operatório e Massagem Relaxante.',
+    instagramHighlight: 'Tirar dúvidas no WhatsApp',
   },
 ];
 
 export const WAXING_SERVICES: WaxingServiceItem[] = [
   {
     id: 'meia-perna',
-    sheermeId: '185523',
     name: 'Meia Perna - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 30',
@@ -255,7 +322,6 @@ export const WAXING_SERVICES: WaxingServiceItem[] = [
   },
   {
     id: 'coxa',
-    sheermeId: '185525',
     name: 'Coxa - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 30',
@@ -264,7 +330,6 @@ export const WAXING_SERVICES: WaxingServiceItem[] = [
   },
   {
     id: 'virilha-simples',
-    sheermeId: '185520',
     name: 'Virilha - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 35',
@@ -273,7 +338,6 @@ export const WAXING_SERVICES: WaxingServiceItem[] = [
   },
   {
     id: 'gluteo',
-    sheermeId: '185522',
     name: 'Glúteo - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 50',
@@ -282,7 +346,6 @@ export const WAXING_SERVICES: WaxingServiceItem[] = [
   },
   {
     id: 'virilha-completa',
-    sheermeId: '185521',
     name: 'Virilha Completa - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 60',
@@ -291,7 +354,6 @@ export const WAXING_SERVICES: WaxingServiceItem[] = [
   },
   {
     id: 'perna-inteira',
-    sheermeId: '185524',
     name: 'Perna Inteira - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 60',
@@ -300,7 +362,6 @@ export const WAXING_SERVICES: WaxingServiceItem[] = [
   },
   {
     id: 'perna-mais-virilha-completa',
-    sheermeId: '185526',
     name: 'Perna + Virilha Completa - Depilação a Cera',
     duration: '30 min',
     price: 'R$ 90',

@@ -33,6 +33,7 @@ import {
   Eye,
 } from 'lucide-react';
 import {
+  INSTAGRAM_FEATURED_SERVICES,
   PROCEDURES,
   WAXING_SERVICES,
   DIFFERENTIALS,
@@ -43,12 +44,12 @@ import {
   DEFAULT_WHATSAPP_LINK,
   INSTAGRAM_URL,
   INSTAGRAM_EMBED_URL,
-  SHEERME_BASE_URL,
   GOOGLE_MAPS_DIRECTIONS_URL,
   buildWhatsAppLink,
   type ProcedureCategory,
   type ProcedureItem,
 } from './data/clinicData';
+import AestheticAiSuite from './components/AestheticAiSuite';
 
 const revealUp = {
   hidden: { opacity: 0, y: 28 },
@@ -71,12 +72,12 @@ const staggerParent = {
 
 const MARQUEE_ITEMS = [
   '★ 4.9 de 5 Estrelas no Google (77+ Avaliações)',
-  'Planos Mensais de Drenagem & Modeladora',
   'Limpeza de Pele Profunda & Fototerapia LED',
+  'Drenagem Linfática & Massagem Modeladora',
   'Toxina Botulínica (Botox) & Preenchimento Labial',
+  'Microagulhamento, Peeling & Rejuvenescimento',
   'Depilação a Cera Quente ou Morna',
-  'Pós-Operatório Seguro e Acolhedor',
-  'Espaço 100% Acessível no Coração do Ipsep',
+  'Pós-Operatório Seguro no Coração do Ipsep',
 ];
 
 export default function App() {
@@ -97,11 +98,12 @@ export default function App() {
 
   // Interactive Assessment Builder State
   const [goalArea, setGoalArea] = useState<
-    | 'Plano Corporal Mensal (Drenagem / Modeladora)'
-    | 'Estética Facial (Limpeza / Botox / Preenchimento)'
+    | 'Limpeza de Pele Profunda & Fototerapia LED'
+    | 'Estética Corporal (Drenagem / Modeladora / Planos)'
+    | 'Estética Facial Avançada (Botox / Labial / Microagulhamento)'
     | 'Depilação a Cera'
     | 'Pós-Operatório & Massagem Relaxante'
-  >('Plano Corporal Mensal (Drenagem / Modeladora)');
+  >('Limpeza de Pele Profunda & Fototerapia LED');
   const [preferredPeriod, setPreferredPeriod] = useState<
     'Manhã (08h–12h)' | 'Tarde (13h–19h)' | 'Sábado (08h–12h)'
   >('Manhã (08h–12h)');
@@ -168,8 +170,6 @@ export default function App() {
       ? PROCEDURES
       : PROCEDURES.filter((item) => item.category === activeCategory);
 
-  const monthlyPlans = PROCEDURES.filter((item) => item.category === 'planos-corporais');
-
   const customAssessmentWhatsAppLink = buildWhatsAppLink(
     `Olá, Conceição! Me chamo ${
       patientName.trim() ? patientName.trim() : 'cliente do site'
@@ -205,7 +205,7 @@ export default function App() {
           {/* Zone 1: Brand Wordmark */}
           <a
             href="#inicio"
-            className="font-display text-[1.05rem] sm:text-2xl font-semibold tracking-wide text-white hover:text-[#66C0DA] transition-colors truncate min-w-0"
+            className="font-display text-[1.05rem] sm:text-2xl font-semibold tracking-wide text-white hover:text-[#66C0DA] transition-colors truncate lg:overflow-visible lg:whitespace-nowrap min-w-0"
           >
             Espaço Conceição Ferraz
           </a>
@@ -213,19 +213,13 @@ export default function App() {
           {/* Zone 2: Single-Line Navigation Links (Desktop) */}
           <nav
             aria-label="Navegação Principal"
-            className="hidden lg:flex items-center gap-7 text-xs sm:text-sm font-medium text-[#E4F1F5]/85"
+            className="hidden lg:flex items-center gap-8 text-xs sm:text-sm font-medium text-[#E4F1F5]/85"
           >
             <a
               href="#inicio"
               className="hover:text-white relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#56B0CA] hover:after:w-full after:transition-all whitespace-nowrap shrink-0"
             >
               Início
-            </a>
-            <a
-              href="#planos"
-              className="hover:text-white relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#56B0CA] hover:after:w-full after:transition-all whitespace-nowrap shrink-0"
-            >
-              Planos Mensais
             </a>
             <a
               href="#procedimentos"
@@ -298,19 +292,11 @@ export default function App() {
                   <ChevronRight className="w-4 h-4 text-[#66C0DA]" />
                 </a>
                 <a
-                  href="#planos"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-3 flex items-center justify-between hover:text-[#66C0DA] transition-colors"
-                >
-                  <span>Planos Mensais (sheerME)</span>
-                  <ChevronRight className="w-4 h-4 text-[#66C0DA]" />
-                </a>
-                <a
                   href="#procedimentos"
                   onClick={() => setMobileMenuOpen(false)}
                   className="py-3 flex items-center justify-between hover:text-[#66C0DA] transition-colors"
                 >
-                  <span>Todos os Procedimentos & Depilação</span>
+                  <span>Procedimentos & Depilação</span>
                   <ChevronRight className="w-4 h-4 text-[#66C0DA]" />
                 </a>
                 <a
@@ -425,12 +411,12 @@ export default function App() {
                   className="text-sm sm:text-lg text-[#34505B] leading-relaxed max-w-[58ch] mb-6 sm:mb-9"
                 >
                   Protocolos estéticos faciais e corporais personalizados no coração do{' '}
-                  <strong className="text-[#0B161B] font-semibold">Ipsep, Recife</strong>.
-                  Planos mensais de{' '}
+                  <strong className="text-[#0B161B] font-semibold">Ipsep, Recife</strong>.{' '}
                   <strong className="text-[#0B161B] font-semibold">
-                    drenagem linfática e massagem modeladora
-                  </strong>
-                  , limpeza de pele profunda e depilação a cera com resultados visíveis{' '}
+                    Limpeza de pele profunda, drenagem linfática, massagem modeladora,
+                    Botox
+                  </strong>{' '}
+                  e depilação a cera com resultados visíveis{' '}
                   <strong className="text-[#0B161B] font-semibold">
                     logo na primeira sessão!
                   </strong>
@@ -452,10 +438,10 @@ export default function App() {
                   </a>
 
                   <a
-                    href="#planos"
+                    href="#procedimentos"
                     className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full border border-[#0B161B]/20 text-[#0B161B] hover:border-[#24687E] hover:bg-[#E8F3F7] active:scale-98 text-sm sm:text-base font-medium transition-all duration-200 text-center"
                   >
-                    <span>Ver Planos e Procedimentos</span>
+                    <span>Conhecer Procedimentos</span>
                   </a>
                 </motion.div>
 
@@ -474,10 +460,10 @@ export default function App() {
                   </div>
                   <div>
                     <p className="font-display text-2xl sm:text-3xl font-semibold text-[#0B161B] tabular-nums">
-                      R$ 300
+                      1ª Sessão
                     </p>
                     <p className="text-[11px] sm:text-xs text-[#425861] mt-0.5">
-                      Planos mensais a partir de
+                      Resultados já visíveis
                     </p>
                   </div>
                   <div>
@@ -600,8 +586,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* 3A. FEATURED MONTHLY PLANS SHOWCASE (Planos Oficiais sheerME em Destaque) */}
-        <section id="planos" className="py-14 sm:py-20 lg:py-24 px-3.5 sm:px-8 max-w-[1280px] mx-auto">
+        {/* 3A. DESTAQUES DO INSTAGRAM (@espacoconceicaoferraz) — OS 3 PROTOCOLOS MAIS PROCURADOS */}
+        <section id="destaques" className="py-14 sm:py-20 lg:py-24 px-3.5 sm:px-8 max-w-[1280px] mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -611,30 +597,30 @@ export default function App() {
           >
             <div>
               <p className="text-xs sm:text-sm font-semibold text-[#1E5C70] mb-1.5 sm:mb-2">
-                Pacotes Mensais Oficiais sheerME · Drenagem Linfática & Massagem Modeladora
+                Destaques do Instagram /@espacoconceicaoferraz · Resultados Reais
               </p>
               <h2
                 style={{ textWrap: 'balance' }}
                 className="font-display text-[1.95rem] sm:text-4xl lg:text-[2.85rem] font-semibold text-[#0B161B] leading-tight"
               >
-                Planos Corporais para{' '}
+                Protocolos Mais Procurados pelas{' '}
                 <span className="italic font-normal text-metallic-teal">
-                  Resultados Contínuos
+                  Nossas Clientes
                 </span>
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-[#425861] max-w-md">
-              Escolha a frequência semanal ideal para sua rotina. Sessões de 60 minutos com
-              protocolo personalizado e acompanhamento próximo.
+              Cuidado facial e corporal personalizado com mão leve, tecnologia estética e
+              acompanhamento próximo em cada etapa da sua evolução.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-7 items-stretch">
-            {monthlyPlans.map((plan, idx) => {
-              const isHighlighted = idx === 1; // Plano Bem-Estar 2x/sem
+            {INSTAGRAM_FEATURED_SERVICES.map((service, idx) => {
+              const isHighlighted = idx === 1;
               return (
                 <motion.div
-                  key={plan.id}
+                  key={service.id}
                   initial={{ opacity: 0, y: 36 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
@@ -644,70 +630,75 @@ export default function App() {
                     delay: idx * 0.12,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className={`rounded-[1.75rem] sm:rounded-[2rem] p-6 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-colors ${
+                  className={`rounded-[1.75rem] sm:rounded-[2rem] overflow-hidden flex flex-col justify-between relative transition-colors ${
                     isHighlighted
                       ? 'bg-metallic-teal-Diagnal text-white border-2 border-[#58B2CC] shadow-[0_24px_50px_-15px_rgba(12,26,32,0.45)]'
                       : 'bg-[#F2F7F9] text-[#0B161B] border border-[#0B161B]/10 hover:border-[#287086]'
                   }`}
                 >
                   <div>
-                    <div className="flex items-center justify-between gap-2 text-xs font-medium mb-3.5 sm:mb-4">
-                      <span
-                        className={
-                          isHighlighted ? 'text-[#9EE0F2]' : 'text-[#1E5C70] font-semibold'
-                        }
-                      >
-                        {plan.sessionsSummary} · {plan.duration}
-                      </span>
-                      {isHighlighted && (
-                        <span className="text-[#9EE0F2] font-semibold shrink-0">
-                          ★ Mais Procurado
+                    <div className="relative h-52 sm:h-56 overflow-hidden bg-[#091418]">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#091418]/90 via-[#091418]/20 to-transparent" />
+                      <div className="absolute bottom-3 left-5 right-5 flex items-center justify-between gap-2 text-xs text-white font-medium">
+                        <span>{service.duration}</span>
+                        <span className="text-[#8CE0F5] font-semibold">
+                          {service.priceLabel}
                         </span>
-                      )}
+                      </div>
                     </div>
 
-                    <h3 className="font-display text-2xl sm:text-3xl font-semibold leading-snug mb-3">
-                      {plan.title.split('(')[0].trim()}
-                    </h3>
+                    <div className="p-6 sm:p-8 pb-4">
+                      <div className="flex items-center justify-between gap-2 text-xs font-medium mb-3">
+                        <span
+                          className={
+                            isHighlighted ? 'text-[#9EE0F2]' : 'text-[#1E5C70] font-semibold'
+                          }
+                        >
+                          {service.categoryLabel}
+                        </span>
+                        {isHighlighted && (
+                          <span className="text-[#9EE0F2] font-semibold shrink-0">
+                            ★ Favorito
+                          </span>
+                        )}
+                      </div>
 
-                    <div className="mb-5 pb-4 sm:pb-5 border-b border-current/10 flex items-baseline gap-2">
-                      <span className="font-display text-4xl sm:text-5xl font-semibold tabular-nums">
-                        {plan.priceLabel.replace('A partir de ', '').replace(' / mês', '')}
-                      </span>
-                      <span
-                        className={`text-xs ${
-                          isHighlighted ? 'text-[#E4F1F5]/75' : 'text-[#425861]'
+                      <h3 className="font-display text-2xl sm:text-3xl font-semibold leading-snug mb-3">
+                        {service.title}
+                      </h3>
+
+                      <p
+                        className={`text-xs sm:text-sm leading-relaxed mb-5 ${
+                          isHighlighted ? 'text-[#E4F1F5]/90' : 'text-[#425861]'
                         }`}
                       >
-                        / pacote mensal
-                      </span>
+                        {service.description}
+                      </p>
+
+                      <ul className="space-y-2.5 mb-6">
+                        {service.highlights.map((h, i) => (
+                          <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm">
+                            <Check
+                              className={`w-4 h-4 shrink-0 mt-0.5 ${
+                                isHighlighted ? 'text-[#72C8E0]' : 'text-[#287086]'
+                              }`}
+                            />
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-
-                    <p
-                      className={`text-sm leading-relaxed mb-5 sm:mb-6 ${
-                        isHighlighted ? 'text-[#E4F1F5]/90' : 'text-[#425861]'
-                      }`}
-                    >
-                      {plan.description}
-                    </p>
-
-                    <ul className="space-y-2.5 sm:space-y-3 mb-7 sm:mb-8">
-                      {plan.highlights.map((h, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm">
-                          <Check
-                            className={`w-4 h-4 shrink-0 mt-0.5 ${
-                              isHighlighted ? 'text-[#72C8E0]' : 'text-[#287086]'
-                            }`}
-                          />
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
 
-                  <div className="space-y-2.5">
+                  <div className="px-6 sm:px-8 pb-6 sm:pb-8 space-y-2.5">
                     <a
-                      href={buildWhatsAppLink(plan.whatsappText)}
+                      href={buildWhatsAppLink(service.whatsappText)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`btn-shimmer w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 sm:py-4 rounded-2xl text-sm font-medium transition-transform hover:scale-[1.02] active:scale-98 text-center ${
@@ -716,25 +707,24 @@ export default function App() {
                           : 'bg-metallic-teal text-white border border-[#56B0CA]/40'
                       }`}
                     >
-                      <span>Contratar Plano pelo WhatsApp</span>
+                      <span>Agendar pelo WhatsApp</span>
                       <ArrowUpRight className="w-4 h-4 shrink-0" />
                     </a>
 
-                    {plan.sheermeUrl && (
-                      <a
-                        href={plan.sheermeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`w-full inline-flex items-center justify-center gap-1.5 py-2 text-xs font-medium transition-colors ${
-                          isHighlighted
-                            ? 'text-[#E4F1F5]/80 hover:text-white'
-                            : 'text-[#425861] hover:text-[#0B161B]'
-                        }`}
-                      >
-                        <span>Ou reservar online via sheerME</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </a>
-                    )}
+                    <a
+                      href={INSTAGRAM_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-full inline-flex items-center justify-center gap-1.5 py-2 text-xs font-medium transition-colors ${
+                        isHighlighted
+                          ? 'text-[#E4F1F5]/85 hover:text-white'
+                          : 'text-[#425861] hover:text-[#0B161B]'
+                      }`}
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                      <span>{service.instagramHighlight || 'Ver no Instagram'}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </motion.div>
               );
@@ -908,7 +898,7 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 sm:gap-6 mb-6 sm:mb-8 pb-5 sm:pb-6 border-b border-[#0B161B]/10">
                 <div>
                   <p className="text-xs font-semibold text-[#1E5C70] mb-1.5">
-                    Simulador Interativo · Valores Oficiais sheerME
+                    Simulador Interativo · Cera Quente ou Morna 100% Descartável
                   </p>
                   <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#0B161B]">
                     Monte Sua Sessão de{' '}
@@ -1004,6 +994,9 @@ export default function App() {
             </motion.div>
           </div>
         </section>
+
+        {/* 3C. CENTRAL DE INTELIGÊNCIA ESTÉTICA IA (Diagnóstico Multimodal, Chat 24h & Guia Pré/Pós-Sessão) */}
+        <AestheticAiSuite />
 
         {/* 4. DIFERENCIAIS & GALERIA BENTO INTERATIVA DE ESTRUTURA E ANTES/DEPOIS REAL */}
         <section
@@ -1495,7 +1488,7 @@ export default function App() {
                       htmlFor="goal-select"
                       className="block text-xs font-medium text-white/85 mb-1.5"
                     >
-                      1. Procedimento ou Plano
+                      1. Procedimento Desejado
                     </label>
                     <select
                       id="goal-select"
@@ -1503,8 +1496,9 @@ export default function App() {
                       onChange={(e) =>
                         setGoalArea(
                           e.target.value as
-                            | 'Plano Corporal Mensal (Drenagem / Modeladora)'
-                            | 'Estética Facial (Limpeza / Botox / Preenchimento)'
+                            | 'Limpeza de Pele Profunda & Fototerapia LED'
+                            | 'Estética Corporal (Drenagem / Modeladora / Planos)'
+                            | 'Estética Facial Avançada (Botox / Labial / Microagulhamento)'
                             | 'Depilação a Cera'
                             | 'Pós-Operatório & Massagem Relaxante'
                         )
@@ -1512,16 +1506,22 @@ export default function App() {
                       className="w-full px-3.5 py-3 rounded-xl bg-white/10 border border-white/25 text-base sm:text-sm text-white font-medium focus:outline-none focus:border-[#8CE0F5]"
                     >
                       <option
-                        value="Plano Corporal Mensal (Drenagem / Modeladora)"
+                        value="Limpeza de Pele Profunda & Fototerapia LED"
                         className="text-[#0B161B]"
                       >
-                        Planos Corporais (1x, 2x ou 3x/sem)
+                        Limpeza de Pele Profunda & LED
                       </option>
                       <option
-                        value="Estética Facial (Limpeza / Botox / Preenchimento)"
+                        value="Estética Corporal (Drenagem / Modeladora / Planos)"
                         className="text-[#0B161B]"
                       >
-                        Estética Facial / Limpeza / Botox
+                        Drenagem / Modeladora / Planos
+                      </option>
+                      <option
+                        value="Estética Facial Avançada (Botox / Labial / Microagulhamento)"
+                        className="text-[#0B161B]"
+                      >
+                        Botox / Labial / Microagulhamento
                       </option>
                       <option value="Depilação a Cera" className="text-[#0B161B]">
                         Depilação a Cera
@@ -1743,8 +1743,8 @@ export default function App() {
             <a href="#inicio" className="hover:text-[#8CE0F5] transition-colors">
               Início
             </a>
-            <a href="#planos" className="hover:text-[#8CE0F5] transition-colors">
-              Planos Mensais
+            <a href="#destaques" className="hover:text-[#8CE0F5] transition-colors">
+              Mais Procurados
             </a>
             <a href="#procedimentos" className="hover:text-[#8CE0F5] transition-colors">
               Procedimentos
@@ -1762,14 +1762,6 @@ export default function App() {
               className="px-3.5 py-1.5 rounded-full bg-metallic-teal border border-white/25 text-white font-medium hover:scale-105 transition-transform"
             >
               /@espacoconceicaoferraz
-            </a>
-            <a
-              href={SHEERME_BASE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#8CE0F5] transition-colors"
-            >
-              sheerME
             </a>
           </div>
 
@@ -1912,17 +1904,16 @@ export default function App() {
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
 
-                  {selectedProcedure.sheermeUrl && (
-                    <a
-                      href={selectedProcedure.sheermeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl border border-[#0B161B]/15 text-xs sm:text-sm font-medium text-[#0B161B] hover:border-[#287086] hover:bg-[#F2F7F9] transition-colors"
-                    >
-                      <span>Ver na sheerME</span>
-                      <ArrowUpRight className="w-4 h-4" />
-                    </a>
-                  )}
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl border border-[#0B161B]/15 text-xs sm:text-sm font-medium text-[#0B161B] hover:border-[#287086] hover:bg-[#F2F7F9] transition-colors"
+                  >
+                    <Instagram className="w-4 h-4 text-[#1E5C70]" />
+                    <span>Ver no Instagram</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
             </motion.div>
